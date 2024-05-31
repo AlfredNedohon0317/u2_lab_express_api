@@ -1,9 +1,12 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
+const { Schema } = require('mongoose')
 
-const ReviewSchema = new mongoose.Schema({
-  movie: { type: mongoose.Schema.Types.ObjectId, ref: 'Movie', required: true },
-  score: { type: Number, min: 0, max: 100, required: true },
-  comment: { type: String, required: true }
-});
-
-module.exports = mongoose.model('Review', ReviewSchema);
+const Review = new Schema (
+    {
+    movie: {type: Schema.Types.ObjectId, ref: "movie_id"},
+    score: {type: Number, min: 1, max: 100, required: true},
+    comment: {type: String, required: true}
+    },
+    {timestamps: true},
+)
+module.exports = mongoose.model('reviews', Review)

@@ -1,21 +1,46 @@
-const express = require('express');
-const connectDB = require('./config/db');
+const express = require('express')
+const db = require('./db')
+const movieController = require('./controllers/movieController')
+const actorController = require('./controllers/actorController')
+const reviewController = require('./controllers/reviewControllers')
 
-const app = express();
+const PORT = process.env.PORT || 3001
 
-// Connect to the database
-connectDB();
+const app = express()
 
-// Middleware
-app.use(express.json());
 
-// Routes
-app.use('/api/movies', require('./routes/movies'));
-app.use('/api/actors', require('./routes/actors'));
-app.use('/api/reviews', require('./routes/reviews'));
 
-const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`Listening on port: ${PORT}`))
+
+app.get('/', (req, res) => res.send('5 Bags of Popcorn Movies INC'))
+
+app.get('movies', movieController.getAllMovies)
+
+app.get('/movies/:id', movieController.getMovieById)
+
+app.post('/movies', movieController.createMovie)
+
+app.put('/movies/:id', movieController.updateMovie)
+
+app.delete('/movies/:id', movieController.deleteMovie)
+
+app.get('actors', actorController.getAllActors)
+
+app.get('/actors/:id', actorController.getActorById)
+
+app.post('/actors', actorController.createActor)
+
+app.put('/actors/:id', actorController.updateActor)
+
+app.delete('/actors/:id', actorController.deleteActor)
+
+app.get('reviews', reviewController.getAllReviews)
+
+app.get('/reviews/:id', reviewController.getReviewById)
+
+app.post('/reviews', reviewController.createReview)
+
+app.put('/reviews/:id', reviewController.updateReview)
+
+app.delete('/reviews/:id', reviewController.deleteReview)
